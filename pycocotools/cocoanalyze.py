@@ -1,3 +1,6 @@
+# i. 2020.06.15.월욜.새벽00:41) cocoanalyze 내가 포크해서 수정중인데, vscode로 수정하려고 여기 붙여논뒤에 수정했음.
+# 이건 cocoanalyze 의 cocoanalyze.py 코드임. 다시 내깃헙(포크한리포지토리)에올릴거임. 
+
 __author__  = 'mrr'
 __version__ = '2.0'
 
@@ -14,7 +17,7 @@ import skimage.io as io
 
 class COCOanalyze:
     # Interface for analyzing the keypoints detections on the Microsoft COCO dataset.
-    def __init__(self, cocoGt, cocoDt, iouType='keypoints'):
+    def __init__(self, cocoGt, cocoDt, iouType='keypoints', oks_sigmas_j): # i. 인풋인자에 oks sigmas 추가해줬음. oks_sigmas_j = [0.025, 0.025, 0.025, 0.025, 0.025, 0.025] 예를들어 이런식으로 list로 넣어주면됨. Det2의 cfg 에서도 cfg.TEST.KEYPOINT_OKS_SIGMAS = [0.025, 0.025, 0.025, 0.025, 0.025, 0.025] 이런식으로 해줫지. 사람은 17개포인트니까 이 리스트의 원소갯수가 17개일거고. 지금 요 6개는 일단 내가 대충 임의로 적어놓은 수치이고.
         '''
         Initialize COCOanalyze using coco APIs for gt and dt
         :param cocoGt: coco object with ground truth annotations
@@ -27,6 +30,12 @@ class COCOanalyze:
         self.cocoDt   = cocoDt
         # evaluation COCOeval API
         self.cocoEval = COCOeval(cocoGt,cocoDt,iouType)
+
+        # i. 내가수정해준부분.
+        assert oks_sigmas_j, "j) the value of 'oks_sigmas_j' is not given!!!"
+        if oks_sigmas_j:
+            self.cocoEval.params.kpt_oks_sigmas = np.array(oks_sigmas_j)  # i. 참고: cfg.TEST.KEYPOINT_OKS_SIGMAS = [0.025, 0.025, 0.025, 0.025, 0.025, 0.025] 뭐 이런 형식.
+      
         # gt for analysis
         self._gts = cocoGt.loadAnns(cocoGt.getAnnIds())
         # dt for analysis
@@ -45,6 +54,10 @@ class COCOanalyze:
         # evaluation parameters
         self.params        = {}
         self.params        = Params(iouType=iouType)
+
+        # i. 내가수정해준부분.
+        self.params = np.array(oks_sigmas_j)
+
         self.params.imgIds = sorted(cocoGt.getImgIds())
         self.params.catIds = sorted(cocoGt.getCatIds())
         # get the max number of detections each team has per image
