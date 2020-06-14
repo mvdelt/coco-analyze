@@ -483,13 +483,44 @@ class COCOeval:
             stats[8] = _summarize(0, maxDets=20, areaRng='medium')
             stats[9] = _summarize(0, maxDets=20, areaRng='large')
             return stats
+        def _summarizeKps_verbose():
+            # plot precision recall curves along with summarization for all thresh
+            print('<{}:{}>Verbose Summary:'.format(__author__,__version__))
+            num_stats = 2*(1 + len(self.params.iouThrs) + 2)
+            stats = np.zeros((num_stats,))
+            cur_stat = -1
+
+            # set the main area range
+            mainAreaRng = 'all' if len(self.params.areaRngLbl) > 1 else self.params.areaRngLbl[0]
+
+            for t in self.params.iouThrs:
+                cur_stat += 1
+                stats[cur_stat] = _summarize(1, maxDets=20, iouThr=t, areaRng=mainAreaRng)
+
+            if len(self.params.iouThrs) > 1:
+                stats[cur_stat+1] = _summarize(1, maxDets=20)
+                stats[cur_stat+2] = _summarize(1, maxDets=20, areaRng='medium')
+                stats[cur_stat+3] = _summarize(1, maxDets=20, areaRng='large')
+                cur_stat += 3
+
+            for t in self.params.iouThrs:
+                cur_stat += 1
+                stats[cur_stat] = _summarize(0, maxDets=20, iouThr=t, areaRng=mainAreaRng)
+
+            if len(self.params.iouThrs) > 1:
+                stats[cur_stat+1] = _summarize(0, maxDets=20)
+                stats[cur_stat+2] = _summarize(0, maxDets=20, areaRng='medium')
+                stats[cur_stat+3] = _summarize(0, maxDets=20, areaRng='large')
+
+            return stats
+
         if not self.eval:
             raise Exception('Please run accumulate() first')
         iouType = self.params.iouType
         if iouType == 'segm' or iouType == 'bbox':
             summarize = _summarizeDets
         elif iouType == 'keypoints':
-            summarize = _summarizeKps
+            summarize = _summarizeKps if not verbose else _summarizeKps_verbose
         self.stats = summarize()
 
     def __str__(self):
