@@ -1,5 +1,5 @@
 __author__ = 'j'
-__version__ = 0.01
+__version__ = '0.1'
 
 import numpy as np
 import datetime
