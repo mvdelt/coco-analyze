@@ -56,7 +56,7 @@ class COCOanalyze:
         self.params        = Params(iouType=iouType)
 
         # i. 내가수정해준부분.
-        self.params = np.array(oks_sigmas_j)
+        self.params.sigmas = np.array(oks_sigmas_j)
 
         self.params.imgIds = sorted(cocoGt.getImgIds())
         self.params.catIds = sorted(cocoGt.getCatIds())
