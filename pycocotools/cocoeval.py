@@ -1,4 +1,5 @@
-__author__ = 'tsungyi'
+__author__ = 'j'
+__version__ = 0.01
 
 import numpy as np
 import datetime
