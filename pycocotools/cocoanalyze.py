@@ -937,18 +937,25 @@ class Params:
     def setKpParams(self):
         self.imgIds = []
         self.catIds = []
+        # self.kpts_name     = \
+        #     [u'nose',u'left_eye', u'right_eye',u'left_ear', u'right_ear',
+        #      u'left_shoulder', u'right_shoulder', u'left_elbow', u'right_elbow',
+        #      u'left_wrist', u'right_wrist', u'left_hip', u'right_hip',
+        #      u'left_knee', u'right_knee', u'left_ankle', u'right_ankle']
+        # self.inv_kpts_name = \
+        #     [u'nose', u'right_eye', u'left_eye', u'right_ear', u'left_ear',
+        #      u'right_shoulder', u'left_shoulder', u'right_elbow', u'left_elbow',
+        #      u'right_wrist', u'left_wrist', u'right_hip', u'left_hip',
+        #      u'right_knee', u'left_knee', u'right_ankle', u'left_ankle']
+
+        # i. 키포인트이름들(그리고 그 아래는 아마 inverted키포인트네임일것같은데, 즉 좌우바뀐것같은데 그것도해줌)내가다시설정해줌 내플젝기준으로(6개포인트들).
         self.kpts_name     = \
-            [u'nose',u'left_eye', u'right_eye',u'left_ear', u'right_ear',
-             u'left_shoulder', u'right_shoulder', u'left_elbow', u'right_elbow',
-             u'left_wrist', u'right_wrist', u'left_hip', u'right_hip',
-             u'left_knee', u'right_knee', u'left_ankle', u'right_ankle']
+            [u'Rt_BoneLvl',u'Lt_BoneLvl', u'Rt_Apex',u'Lt_Apex', u'Rt_Top', u'Lt_Top']
         self.inv_kpts_name = \
-            [u'nose', u'right_eye', u'left_eye', u'right_ear', u'left_ear',
-             u'right_shoulder', u'left_shoulder', u'right_elbow', u'left_elbow',
-             u'right_wrist', u'left_wrist', u'right_hip', u'left_hip',
-             u'right_knee', u'left_knee', u'right_ankle', u'left_ankle']
+            [u'Lt_BoneLvl',u'Rt_BoneLvl', u'Lt_Apex',u'Rt_Apex', u'Lt_Top', u'Rt_Top']
         self.num_kpts = len(self.kpts_name)
         self.inv_idx  = [self.inv_kpts_name.index(self.kpts_name[i]) for i in range(self.num_kpts)]
+        # i. 이것도 디폴트는 COCO의 17개포인트로 돼있지만, 저~위에 COCOanalyze 클래스의 init에서 사용자가 넣어준 OKS sigmas 값으로 넣어주도록해놨음내가.
         self.sigmas   = np.array([.026,.025,.025, .035,.035, .079,.079, .072,.072,
                                      .062,.062, .107,.107, .087,.087, .089,.089])
         self.oksThrs  = np.array([.5 ,.55, .6, .65, .7, .75, .8, .85, .9, .95])
