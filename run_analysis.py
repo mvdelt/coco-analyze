@@ -53,13 +53,16 @@ def main():
                  for i in gt_data['images']}
 
     ## load team detections
-    dt_data  = json.load(open(resFile,'r'))
+    dt_data  = json.load(open(resFile,'r')) # i. 내생각이맞다면, dt_data는 COCO형식의 어노테이션json의 "annotations"키의 밸류임. 즉, [{어노1정보},{어노2정보},...] 이런 리스트.
     team_dts = {}
-    for d in dt_data:
+    for d in dt_data: # i. image id 별로 묶어줌. image id 가 키이고, 밸류는 [{해당이미지의 어노1정보}, {해당이미지의 어노2정보},...] 이런식.
         if d['image_id'] in team_dts: team_dts[d['image_id']].append(d)
         else: team_dts[d['image_id']] = [d]
     team_split_dts = []
-    for img_id in team_dts:
+    # i. 각 image id 별로, score 상위 20개 어노테이션정보(dict)들만 score높은순서대로 정렬해서 텅빈리스트에 extend해줌.
+    # 즉, 결과물은 [{이미지1의 어노3정보}, {이미지1의 어노8정보},... {이미지2의 어노5정보}, {이미지2의 어노12정보}, ...] 이런식이 되겠지.
+    # (이미지1에서 어노3,어노8,...순서로 점수1등,2등,...이고 이미지2에서 어노5,어노12,...순서로 점수1등,2등,... 이라고 치면말야.)
+    for img_id in team_dts: 
         if img_id in imgs_info:
             team_split_dts.extend(sorted(team_dts[img_id], key=lambda k: -k['score'])[:20])
     print("Loaded [{}] detections from [{}] images.".format(len(team_split_dts),len(imgs_info)))
@@ -74,7 +77,7 @@ def main():
     coco_gt = COCO( annFile )
 
     ## initialize COCO detections api
-    coco_dt   = coco_gt.loadRes( team_split_dts )
+    coco_dt   = coco_gt.loadRes( team_split_dts ) # i. COCOanalyze_demo.ipynb 에서는 team_split_dts 말고 resFile을 json.load한걸 그대로 넣어줬었는데, 여기선 각 이미지마다 상위20개어노만뽑아서 점수순으로 정렬한걸 넣어주네.
 
     ## initialize COCO analyze api
     coco_analyze = COCOanalyze(coco_gt, coco_dt, 'keypoints')
