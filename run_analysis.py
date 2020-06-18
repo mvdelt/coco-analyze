@@ -49,7 +49,7 @@ def main():
     gt_data   = json.load(open(annFile,'r'))
     imgs_info = {i['id']:{'id'      :i['id'] ,
                           'width'   :i['width'],
-                          'height'  :i['height'],
+                          'height'  :i['height']}
                         #   'coco_url':i['coco_url']}  # i. KeyError: 'coco_url' 에러떠서 일단코멘트아웃. 아마 gt어노json에 coco_url정보 없엇던듯.지금밖이라이따집가서확인할예정.
                  for i in gt_data['images']}
 
