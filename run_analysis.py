@@ -16,6 +16,7 @@ from analysisAPI.occlusionAndCrowdingSensitivity import occlusionAndCrowdingSens
 from analysisAPI.sizeSensitivity import sizeSensitivity
 
 def main():
+    print('j) sys.argv:',sys.argv)
     if len(sys.argv) != 6:
         raise ValueError("Please specify args: $> python run_analysis.py [annotations_path] [detections_path] [save_dir] [team_name] [version_name]")
 
