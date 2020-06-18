@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import matplotlib.path as mplPath
 from matplotlib.collections import PatchCollection
 from matplotlib.patches import Polygon
-from scipy.misc import imresize
+# from scipy.misc import imresize # i. 여기서 imresize 쓰지도 않는데? 근데문제는 scipy 버전 1.3인가부터는 imresize 없어졌음. 그래서 자꾸 임포트시 에러남. 이거대신 Pillow를 사용하란 메시지를 공식 소스코드에서 볼수있음.  
 import skimage.io as io
 
 """
