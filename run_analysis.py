@@ -33,7 +33,7 @@ def main():
         autoescape            = False,
         loader                = jinja2.FileSystemLoader(os.path.abspath('./latex/'))
     )
-    template = latex_jinja_env.get_template('latex/report_template.tex')
+    template = latex_jinja_env.get_template('report_template.tex') # i. 걍 이렇게하는게맞는듯한데... 위에서 ./latex/ 라고 해줫으니..
     template_vars  = {}
 
     annFile   = sys.argv[1]; splitName = annFile.split("/")[-1]
