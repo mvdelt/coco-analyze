@@ -3,7 +3,8 @@ import os, time
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.path as mplPath
-from scipy.misc import imresize
+# from scipy.misc import imresize
+from PIL import Image # i. scipy의 imresize는 없어졌음. Pillow 로 대체.
 import skimage.io as io
 
 # package imports 
@@ -146,7 +147,9 @@ def backgroundFalseNegErrors( coco_analyze, imgs_info, saveDir ):
             grid = grid.reshape((ny,nx))
 
             the_mask += np.array(grid, dtype=int)
-        segm_heatmap += imresize(the_mask,(128,128))
+        # segm_heatmap += imresize(the_mask,(128,128)) # i. scipy의 imresize는 없어졌음. Pillow 로 대체해서 다음과같이 하면 됨: numpy.array(Image.fromarray(arr).resize())
+        segm_heatmap += np.array(Image.fromarray(the_mask).resize((128,128), resample=PIL.Image.BILINEAR))
+
 
     fig = plt.figure(figsize=(10,10))
     ax = plt.subplot(111)
