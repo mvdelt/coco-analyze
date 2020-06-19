@@ -623,8 +623,9 @@ class Params:
         self.areaRng = [[0 ** 2, 1e5 ** 2], [32 ** 2, 96 ** 2], [96 ** 2, 1e5 ** 2]]
         self.areaRngLbl = ['all', 'medium', 'large']
         self.useCats = 1
-        # i. 일단 디폴트로는 COCO 의 사람 키포인트 OKS simgas 값으로 해놓긴 했지만, COCOanalyze클래스의 init에서 사용자가입력해준 OKS sigmas 값으로 새로 넣어주도록 해놨음 내가.
-        self.kpt_oks_sigmas = np.array([.26, .25, .25, .35, .35, .79, .79, .72, .72, .62,.62, 1.07, 1.07, .87, .87, .89, .89])/10.0
+        # i. 일단 디폴트로는 COCO 의 사람 키포인트 OKS simgas 값으로 해놓긴 했지만, COCOanalyze클래스의 init에서 사용자가입력해준 OKS sigmas 값으로 새로 넣어주도록 해놨음 내가. ->걍혹시몰라서 디폴트값도 내6개키포인트기준으로 바꿧음(임시값).
+        # self.kpt_oks_sigmas = np.array([.26, .25, .25, .35, .35, .79, .79, .72, .72, .62,.62, 1.07, 1.07, .87, .87, .89, .89])/10.0
+        self.kpt_oks_sigmas = np.array([0.025, 0.025, 0.025, 0.025, 0.025, 0.025])
         # use gt ignores flag to discard any gt_id from evaluation
         self.useGtIgnore = 0
         self.gtIgnoreIds = set()

@@ -963,9 +963,10 @@ class Params:
             [u'Lt_BoneLvl',u'Rt_BoneLvl', u'Lt_Apex',u'Rt_Apex', u'Lt_Top', u'Rt_Top']
         self.num_kpts = len(self.kpts_name)
         self.inv_idx  = [self.inv_kpts_name.index(self.kpts_name[i]) for i in range(self.num_kpts)]
-        # i. 이것도 디폴트는 COCO의 17개포인트로 돼있지만, 저~위에 COCOanalyze 클래스의 init에서 사용자가 넣어준 OKS sigmas 값으로 넣어주도록해놨음내가.
-        self.sigmas   = np.array([.026,.025,.025, .035,.035, .079,.079, .072,.072,
-                                     .062,.062, .107,.107, .087,.087, .089,.089])
+        # i. 이것도 디폴트는 COCO의 17개포인트로 돼있지만, 저~위에 COCOanalyze 클래스의 init에서 사용자가 넣어준 OKS sigmas 값으로 넣어주도록해놨음내가. ->걍혹시몰라서 바로아래서 걍 디폴트를 6개포인트로 바꿔줌(임시값).
+        # self.sigmas   = np.array([.026,.025,.025, .035,.035, .079,.079, .072,.072,
+        #                              .062,.062, .107,.107, .087,.087, .089,.089])
+        self.sigmas   = np.array([0.025, 0.025, 0.025, 0.025, 0.025, 0.025])
         self.oksThrs  = np.array([.5 ,.55, .6, .65, .7, .75, .8, .85, .9, .95])
         # the threshold that determines the limit for localization error
         self.oksLocThrs = .1
