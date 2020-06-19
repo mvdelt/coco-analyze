@@ -162,7 +162,7 @@ def localizationErrors( coco_analyze, imgs_info, saveDir ):
             print('j) <err_type:{},{}/3pairs>'.format(err_type, i))
             print('j) tot_errs:{}, float(sum(err_vecs[j])):{}'.format(tot_errs ,float(sum(err_vecs[j]))))
             print('j) tot_errs/float(sum(err_vecs[j])+0.00001):',tot_errs/float(sum(err_vecs[j])+0.00001))
-            ERRORS.append(tot_errs/float(sum(err_vecs[j])+0.00001)) # i. 0으로 나눠지는 문제가 발생하는것같아서 아주작은수 내가 더해줌.
+            ERRORS.append(tot_errs/float(sum(err_vecs[j])+0.00001)) # i. 0으로 나눠지는 문제가 발생하는것같아서 아주작은수 내가 더해줌. ->에러해결!
 
         for lind, l in enumerate(KEYPOINTS_L):
             label_str = '{:7s}: {:2.1f}'.format(l,100*ERRORS[lind])

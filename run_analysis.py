@@ -55,8 +55,12 @@ def main():
     gt_data   = json.load(open(annFile,'r'))
     imgs_info = {i['id']:{'id'      :i['id'] ,
                           'width'   :i['width'],
-                          'height'  :i['height']}
-                        #   'coco_url':i['coco_url']}  # i. KeyError: 'coco_url' 에러떠서 일단코멘트아웃. 아마 gt어노json에 coco_url정보 없엇던듯.지금밖이라이따집가서확인할예정.->ㅇㅇ맞음.
+                          'height'  :i['height'],
+                        # 'coco_url':i['coco_url']}  # i. KeyError: 'coco_url' 에러떠서 일단코멘트아웃. 아마 gt어노json에 coco_url정보 없엇던듯.지금밖이라이따집가서확인할예정.->ㅇㅇ맞음.
+                 
+                          # i. coco_url 은 없으니, key는 그대로 'coco_url' 로 하되, value를 이미지파일의 경로로 해줘봄(요 coco_url키가 몇군데에서 쓰여서 걍 살려주는게나을듯.).
+                          'coco_url': '/content/pa_keypointj_upper_val/{}'.format(i['file_name'])}
+
                  for i in gt_data['images']}
 
     ## load team detections
