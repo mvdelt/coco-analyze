@@ -15,6 +15,8 @@ from analysisAPI.backgroundFalseNegErrors import backgroundFalseNegErrors
 from analysisAPI.occlusionAndCrowdingSensitivity import occlusionAndCrowdingSensitivity
 from analysisAPI.sizeSensitivity import sizeSensitivity
 
+import numpy as np # i. 내가임포트함.
+
 def main():
 
     # i. 넘파이 연산 에러 디버그하기위해 여기에 numpy.seterr(...) 넣어줘봄.
