@@ -20,7 +20,8 @@ import numpy as np # i. 내가임포트함.
 def main():
 
     # i. 넘파이 연산 에러 디버그하기위해 여기에 numpy.seterr(...) 넣어줘봄.
-    np.seterr(all='warn', divide='raise')
+    # np.seterr(all='warn', divide='raise')
+    np.seterr(all='raise')
 
     print('j) sys.argv:',sys.argv)
     print('j) len(sys.argv):',len(sys.argv))    
