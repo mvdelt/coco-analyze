@@ -24,6 +24,11 @@ class COCOanalyze:
         :param cocoDt: coco object with detection results
         :return: None
         '''
+
+        # i. 넘파이 연산 에러 디버그하기위해 여기에 이거 넣어줘봄. 이러면 에러난 위치가 좀 보이려나?
+        np.seterr(all='raise')
+        import sys # i. 내가임포트함.
+
         # ground truth COCO API
         self.cocoGt   = cocoGt
         # detections COCO API
@@ -602,6 +607,9 @@ class COCOanalyze:
         if not self.corrected_dts:
             raise Exception('<{}:{}>Please run analyze() first'.format(__author__,__version__))
 
+        print('j) this is summarize method...')
+        print('j) this is {} method...(using sys.getframe()~~)'.format(sys._getframe().f_code.co_name))
+
         self.stats = []
         oksThrs    = sorted(self.params.oksThrs)[::-1]
         areaRngLbl = self.params.areaRngLbl
@@ -673,6 +681,8 @@ class COCOanalyze:
                        self.params, err_labels, colors_vec, savedir, team_name)
 
     def _summarize_baseline(self):
+        print('j) this is _summarize_baseline method...')
+        print('j) this is {} method...(using sys.getframe()~~)'.format(sys._getframe().f_code.co_name))
         self._cleanup()
         # set area range and the oks thresholds
         oksThrs = sorted(self.params.oksThrs)
@@ -687,6 +697,8 @@ class COCOanalyze:
         return ps, rs
 
     def _summarize_kpt_errors(self):
+        print('j) this is _summarize_kpt_errors method...')
+        print('j) this is {} method...(using sys.getframe()~~)'.format(sys._getframe().f_code.co_name))
         oksThrs = sorted(self.params.oksThrs)
         self.cocoEval.params.maxDets = self.params.maxDets
         self.cocoEval.params.iouThrs = oksThrs
@@ -744,6 +756,8 @@ class COCOanalyze:
         return ps_mat_kpts, rs_mat_kpts
 
     def _summarize_score_errors(self):
+        print('j) this is _summarize_score_errors method...')
+        print('j) this is {} method...(using sys.getframe()~~)'.format(sys._getframe().f_code.co_name))
         oksThrs = sorted(self.params.oksThrs)
         self.cocoEval.params.maxDets = self.params.maxDets
         self.cocoEval.params.iouThrs = oksThrs
@@ -771,6 +785,7 @@ class COCOanalyze:
         return ps_mat_score, rs_mat_score
 
     def _summarize_bckgd_errors(self):
+        print('j) this is {} method...(using sys.getframe()~~)'.format(sys._getframe().f_code.co_name))
         oksThrs = sorted(self.params.oksThrs)
         self.cocoEval.params.maxDets = self.params.maxDets
         self.cocoEval.params.iouThrs = oksThrs
@@ -827,6 +842,8 @@ class COCOanalyze:
 
     @staticmethod
     def _summarize(err_types, ps_mat, rs_mat, oksThrs, areaRngLbl, maxDets):
+        print('j) this is @staticmethod _summarize method... SEE IF sys._getframe()~~ works well below!!')
+        print('j) this is {} method...(using sys.getframe()~~)'.format(sys._getframe().f_code.co_name))
         stats = []
         l = len(oksThrs)
 
