@@ -32,7 +32,8 @@ class COCOanalyze:
         self.cocoEval = COCOeval(cocoGt,cocoDt,iouType)
 
         # i. 내가수정해준부분. ##########################
-        assert oks_sigmas_j, "j) 'oks_sigmas_j' is not given!!!"
+        print('j) (COCOanalyze __init__) oks_sigmas_j:',oks_sigmas_j)
+        assert oks_sigmas_j, "j) 'oks_sigmas_j' is not given!!!" # i. 요 한줄도 필요없겟는데? 일단냅둠.
         def is_number(s): # i. 내가스택오버플로에서긁어온코드. string 이 숫자인지 체크하는 함수.
             try:
                 float(s)

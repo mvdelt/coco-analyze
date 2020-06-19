@@ -17,8 +17,10 @@ from analysisAPI.sizeSensitivity import sizeSensitivity
 
 def main():
     print('j) sys.argv:',sys.argv)
-    if len(sys.argv) != 6:
-        raise ValueError("Please specify args: $> python run_analysis.py [annotations_path] [detections_path] [save_dir] [team_name] [version_name]")
+    # i. 이 파일(run_analysis.py)실행할때 커맨드라인 아규먼트로 맨마지막에 OKS sigmas 도 추가하도록 내가 수정함.
+    # i. 바로아랫부분도 바꺼줌. 아규먼트 하나 더 추가했으니.
+    if len(sys.argv) != 7:
+        raise ValueError("Please specify args: $> python run_analysis.py [annotations_path] [detections_path] [save_dir] [team_name] [version_name] [oks_sigmas_j]")
 
     latex_jinja_env = jinja2.Environment(
         block_start_string    = '\BLOCK{',
@@ -44,13 +46,14 @@ def main():
         os.makedirs(saveDir)
     teamName    = sys.argv[4]
     versionName = sys.argv[5]
+    oks_sigmas_j = sys.argv[6] # i. 내가추가한부분.
 
     ## create dictionary with all images info
     gt_data   = json.load(open(annFile,'r'))
     imgs_info = {i['id']:{'id'      :i['id'] ,
                           'width'   :i['width'],
                           'height'  :i['height']}
-                        #   'coco_url':i['coco_url']}  # i. KeyError: 'coco_url' 에러떠서 일단코멘트아웃. 아마 gt어노json에 coco_url정보 없엇던듯.지금밖이라이따집가서확인할예정.
+                        #   'coco_url':i['coco_url']}  # i. KeyError: 'coco_url' 에러떠서 일단코멘트아웃. 아마 gt어노json에 coco_url정보 없엇던듯.지금밖이라이따집가서확인할예정.->ㅇㅇ맞음.
                  for i in gt_data['images']}
 
     ## load team detections
@@ -81,7 +84,8 @@ def main():
     coco_dt   = coco_gt.loadRes( team_split_dts ) # i. COCOanalyze_demo.ipynb 에서는 team_split_dts 말고 resFile을 json.load한걸 그대로 넣어줬었는데, 여기선 각 이미지마다 상위20개어노만뽑아서 점수순으로 정렬한걸 넣어주네.
 
     ## initialize COCO analyze api
-    coco_analyze = COCOanalyze(coco_gt, coco_dt, 'keypoints')
+    # coco_analyze = COCOanalyze(coco_gt, coco_dt, 'keypoints')
+    coco_analyze = COCOanalyze(coco_gt, coco_dt, oks_sigmas_j,'keypoints') # i. COCOanalyze 클래스를 내가수정해줬으므로 그에맞게 인풋인자 넣어줌(oks_sigmas_j 가 내가추가해준거.).
     if teamName == 'fakekeypoints100':
         imgIds  = sorted(coco_gt.getImgIds())[0:100]
         coco_analyze.cocoEval.params.imgIds = imgIds
