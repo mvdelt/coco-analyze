@@ -32,7 +32,14 @@ class COCOanalyze:
         self.cocoEval = COCOeval(cocoGt,cocoDt,iouType)
 
         # i. 내가수정해준부분.
-        assert oks_sigmas_j, "j) the value of 'oks_sigmas_j' is not given!!!"
+        assert oks_sigmas_j, "j) 'oks_sigmas_j' is not given!!!"
+        def is_number(s): # i. 내가스택오버플로에서긁어온코드. string 이 숫자인지 체크하는 함수.
+            try:
+                float(s)
+                return True
+            except ValueError:
+                return False
+        assert is_number(oks_sigmas_j[0]), "j) something is wrong!! the element of the list 'oks_sigmas_j' seems to be NOT a number!!!"
         if oks_sigmas_j:
             self.cocoEval.params.kpt_oks_sigmas = np.array(oks_sigmas_j)  # i. 참고: cfg.TEST.KEYPOINT_OKS_SIGMAS = [0.025, 0.025, 0.025, 0.025, 0.025, 0.025] 뭐 이런 형식.
       
