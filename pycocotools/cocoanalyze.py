@@ -933,8 +933,11 @@ class COCOanalyze:
                         print('j) precisions:',precisions)
                         print('j) precisions[precisions>-1].shape:',precisions[precisions>-1].shape)
                         print('j) precisions[precisions>-1]:',precisions[precisions>-1])
-                        m_map = np.mean(precisions[precisions>-1])
-                        if len(precisions[precisions>-1])==0: m_map=.0
+                        # m_map = np.mean(precisions[precisions>-1]) # i. 이렇게하면 len(precisions[precisions>-1])==0 일 경우(텅빈리스트일경우)에 np.mean 계산에서 에러가 남.
+                        if len(precisions[precisions>-1])==0: # i. 요건 원래 있던 코드임. 이렇게해놓고 else에 안넣다니;;
+                            m_map=.0
+                        else:
+                            m_map = np.mean(precisions[precisions>-1]) # i. 그래서 내가 else 안에 넣어줬음.
                         interm_m_map = '%.3f'%m_map
                         m_map_val_str = interm_m_map[1-int(interm_m_map[0]):5-int(interm_m_map[0])]
 
