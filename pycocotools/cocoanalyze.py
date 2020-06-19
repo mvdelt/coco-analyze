@@ -896,8 +896,10 @@ class COCOanalyze:
 
         print('j) list(enumerate(areaRngLbl)):',list(enumerate(areaRngLbl)))
         for aind, a in enumerate(areaRngLbl):
+            print('j) in areaRngLbl, aind:{}, a:{}'.format(aind, a))
             print('j) list(enumerate(maxDets)):',list(enumerate(maxDets)))
             for mind, m in enumerate(maxDets):
+                print('j) in maxDets, mind:{}, m:{}'.format(mind, m))
                 if not err_labels:
                     fig=plt.figure(figsize=(10,8))
                     ax = fig.add_axes([0.1, 0.15, 0.56, 0.7])
@@ -906,6 +908,7 @@ class COCOanalyze:
 
                 print('j) list(enumerate(iouThrs)):',list(enumerate(iouThrs)))
                 for tind, t in enumerate(iouThrs):
+                    print('j) in iouThrs, tind:{}, t:{}'.format(tind, t))
                     legend_patches = []
                     if err_labels:
                         fig=plt.figure(figsize=(10,8))
@@ -916,6 +919,7 @@ class COCOanalyze:
 
                     print('j) list(enumerate(labels)):',list(enumerate(labels)))
                     for lind, l in enumerate(labels):
+                        print('j) in labels, lind:{}, l:{}'.format(lind, l))
                         precisions = oks_ps_mat[lind,:,catId,aind,mind] # i. T,R,K,A,M 일거임(이게뭔진조사완료함. iou쓰레숄드,리콜쓰레숄드,카테고리,에어리어,최대디텍션수 임.). 
                         plt.plot(recalls,precisions,c='k',ls='-',lw=2)
 
