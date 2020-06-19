@@ -138,7 +138,7 @@ def localizationErrors( coco_analyze, imgs_info, saveDir ):
     f.write(" - Miss:      %s\n"%miss_keypoints)
 
     # KEYPOINTS_L = ['Nose','Eyes','Ears','Should.','Elbows','Wrists','Hips','Knees','Ankles']
-    KEYPOINTS_L = ['Nosejjjj','Eyesjjjj','Earsjjjj','Shouldjjjj.','Elbowsjjjj','Wristsjjjj']
+    KEYPOINTS_L = ['Nosejjjj','Eyesjjjj','Earsjjjj']
     KEYPOINTS_I = [[0,1],[2,3],[4,5]]
 
     ####################################
