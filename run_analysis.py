@@ -48,7 +48,7 @@ def main():
     teamName    = sys.argv[4]
     versionName = sys.argv[5]
     oks_sigmas_str_j = sys.argv[6] # i. 내가추가한부분.
-    oks_sigmas_j = map(int, oks_sigmas_str_j.strip('[]').split(','))
+    oks_sigmas_j = list(map(int, oks_sigmas_str_j.strip('[]').split(',')))
 
     ## create dictionary with all images info
     gt_data   = json.load(open(annFile,'r'))
