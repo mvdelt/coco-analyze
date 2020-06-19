@@ -147,8 +147,9 @@ def localizationErrors( coco_analyze, imgs_info, saveDir ):
     err_vecs = [jitt_keypoints,inv_keypoints,swap_keypoints,miss_keypoints]
 
     # i. 포문으로 디버그용 출력.
-    for i in [good_keypoints,jitt_keypoints,inv_keypoints,swap_keypoints,miss_keypoints]:
-        print('j) (localizationErrors.py) {}:'.format(i))
+    print('j) (localizationErrors.py) good_keypoints, jitt_keypoints, inv_keypoints, swap_keypoints, miss_keypoints 은 각각 아래와 같음:')
+    for i in [good_keypoints, jitt_keypoints, inv_keypoints, swap_keypoints, miss_keypoints]:
+        print('j) {}'.format(i))
 
     for j, err_type in enumerate(['Jitter', 'Inversion', 'Swap', 'Miss']):
         TOT_LABELS = []
@@ -157,7 +158,11 @@ def localizationErrors( coco_analyze, imgs_info, saveDir ):
             tot_errs = 0
             for l in i:
                 tot_errs += err_vecs[j][l]
-            ERRORS.append(tot_errs/float(sum(err_vecs[j])))
+            # ERRORS.append(tot_errs/float(sum(err_vecs[j])))
+            print('j) <err_type:{},{}/3pairs>'.format(err_type, i))
+            print('j) tot_errs:{}, float(sum(err_vecs[j])):{}'.format(tot_errs ,float(sum(err_vecs[j]))))
+            print('j) tot_errs/float(sum(err_vecs[j])+0.00001):',tot_errs/float(sum(err_vecs[j])+0.00001))
+            ERRORS.append(tot_errs/float(sum(err_vecs[j])+0.00001)) # i. 0으로 나눠지는 문제가 발생하는것같아서 아주작은수 내가 더해줌.
 
         for lind, l in enumerate(KEYPOINTS_L):
             label_str = '{:7s}: {:2.1f}'.format(l,100*ERRORS[lind])
