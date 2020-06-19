@@ -16,6 +16,10 @@ from analysisAPI.occlusionAndCrowdingSensitivity import occlusionAndCrowdingSens
 from analysisAPI.sizeSensitivity import sizeSensitivity
 
 def main():
+
+    # i. 넘파이 연산 에러 디버그하기위해 여기에 numpy.seterr(...) 넣어줘봄.
+    np.seterr(all='warn', divide='raise)
+
     print('j) sys.argv:',sys.argv)
     print('j) len(sys.argv):',len(sys.argv))    
     # i. 이 파일(run_analysis.py)실행할때 커맨드라인 아규먼트로 맨마지막에 OKS sigmas 도 추가하도록 내가 수정함.

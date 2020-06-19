@@ -15,6 +15,8 @@ from colour import Color
 
 import skimage.io as io
 
+import sys # i. 내가임포트함.
+
 class COCOanalyze:
     # Interface for analyzing the keypoints detections on the Microsoft COCO dataset.
     def __init__(self, cocoGt, cocoDt, oks_sigmas_j, iouType='keypoints'): # i. 인풋인자에 oks sigmas 추가해줬음. oks_sigmas_j = [0.025, 0.025, 0.025, 0.025, 0.025, 0.025] 예를들어 이런식으로 list로 넣어주면됨. Det2의 cfg 에서도 cfg.TEST.KEYPOINT_OKS_SIGMAS = [0.025, 0.025, 0.025, 0.025, 0.025, 0.025] 이런식으로 해줫지. 사람은 17개포인트니까 이 리스트의 원소갯수가 17개일거고. 지금 요 6개는 일단 내가 대충 임의로 적어놓은 수치이고.
@@ -25,9 +27,8 @@ class COCOanalyze:
         :return: None
         '''
 
-        # i. 넘파이 연산 에러 디버그하기위해 여기에 이거 넣어줘봄. 이러면 에러난 위치가 좀 보이려나?
+        # i. 넘파이 연산 에러 디버그하기위해 여기에 이거 넣어줘봄. 이러면 에러난 위치가 좀 보이려나? ->오 작동하네?!! 그럼 여기말고 아예 최상단인 run_analysis.py 에 넣어줘보자.
         # np.seterr(all='raise')
-        import sys # i. 내가임포트함.
 
         # ground truth COCO API
         self.cocoGt   = cocoGt
