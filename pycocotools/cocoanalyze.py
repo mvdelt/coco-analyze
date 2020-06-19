@@ -879,6 +879,7 @@ class COCOanalyze:
 
     @staticmethod
     def _plot(recalls, ps_mat, params, err_labels=[], color_vec=[], savedir=None, team_name=None):
+        print('j) this is {} method...(using sys.getframe()~~)'.format(sys._getframe().f_code.co_name))
         iouThrs    = params.oksThrs[::-1]
         areaRngLbl = params.areaRngLbl
         maxDets    = params.maxDets
@@ -920,7 +921,8 @@ class COCOanalyze:
                                          prev_precisions, precisions,
                                          where=precisions >= prev_precisions,
                                          facecolor=colors[lind].rgb, interpolate=True)
-
+                        print('j) precisions:{}'.format(precisions))
+                        print('j) precisions[precisions>-1]:{}'.format(precisions[precisions>-1]))
                         m_map = np.mean(precisions[precisions>-1])
                         if len(precisions[precisions>-1])==0: m_map=.0
                         interm_m_map = '%.3f'%m_map
