@@ -51,8 +51,10 @@ def localizationErrors( coco_analyze, imgs_info, saveDir ):
         gtm   = coco_analyze.cocoGt.loadAnns(match['gtId'])[0]
 
         good      += sum(dtm['good'])
-        jitter    += sum(dtm['jitter']); inversion += sum(dtm['inversion'])
-        swap      += sum(dtm['swap']);   miss      += sum(dtm['miss'])
+        jitter    += sum(dtm['jitter'])
+        inversion += sum(dtm['inversion'])
+        swap      += sum(dtm['swap'])
+        miss      += sum(dtm['miss'])
 
         good_keypoints += np.array(dtm['good'])
         jitt_keypoints += np.array(dtm['jitter'])
@@ -160,6 +162,7 @@ def localizationErrors( coco_analyze, imgs_info, saveDir ):
         rect = -.03,0,0.45,0.9
         ax1 = fig.add_axes(rect)
         colors = [c.rgb for c in list(Color("white").range_to(Color(COLORS[j]),len(KEYPOINTS_L)))]
+        print('j) ERRORS:{}, its type:{}'.format(ERRORS, type(ERRORS)))
         patches, autotexts = ax1.pie( ERRORS, colors=colors)
         lgd=fig.legend(patches, TOT_LABELS, bbox_to_anchor=(.45, .9),
             loc="upper left",ncol=2,fancybox=True, shadow=True,fontsize=20)
