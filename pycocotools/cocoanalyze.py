@@ -929,7 +929,9 @@ class COCOanalyze:
                                          prev_precisions, precisions,
                                          where=precisions >= prev_precisions,
                                          facecolor=colors[lind].rgb, interpolate=True)
+                        print('j) precisions.shape:',precisions.shape)
                         print('j) precisions:',precisions)
+                        print('j) precisions[precisions>-1].shape:',precisions[precisions>-1].shape)
                         print('j) precisions[precisions>-1]:',precisions[precisions>-1])
                         m_map = np.mean(precisions[precisions>-1])
                         if len(precisions[precisions>-1])==0: m_map=.0
