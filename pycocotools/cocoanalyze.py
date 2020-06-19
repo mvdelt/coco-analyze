@@ -40,7 +40,7 @@ class COCOanalyze:
                 return True
             except ValueError:
                 return False
-        assert is_number(oks_sigmas_j[0]), "j) something is wrong!! the element of the list 'oks_sigmas_j' seems to be NOT a number!!! right now 'oks_sigmas_j' is: {}".format(oks_sigmas_j)
+        assert is_number(oks_sigmas_j[0]), "j) something is wrong!! the element of the list 'oks_sigmas_j' seems to be NOT a number!!! right now 'oks_sigmas_j' is: {}, and its type is:{}".format(oks_sigmas_j, type(oks_sigmas_j))
         self.cocoEval.params.kpt_oks_sigmas = np.array(oks_sigmas_j)  # i. 참고: cfg.TEST.KEYPOINT_OKS_SIGMAS = [0.025, 0.025, 0.025, 0.025, 0.025, 0.025] 뭐 이런 형식.
         ################################################
 

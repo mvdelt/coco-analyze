@@ -17,10 +17,11 @@ from analysisAPI.sizeSensitivity import sizeSensitivity
 
 def main():
     print('j) sys.argv:',sys.argv)
+    print('j) len(sys.argv):',len(sys.argv))    
     # i. 이 파일(run_analysis.py)실행할때 커맨드라인 아규먼트로 맨마지막에 OKS sigmas 도 추가하도록 내가 수정함.
     # i. 바로아랫부분도 바꺼줌. 아규먼트 하나 더 추가했으니.
     if len(sys.argv) != 7:
-        raise ValueError("Please specify args: $> python run_analysis.py [annotations_path] [detections_path] [save_dir] [team_name] [version_name] [oks_sigmas_j]")
+        raise ValueError("Please specify args: $> python run_analysis.py [annotations_path] [detections_path] [save_dir] [team_name] [version_name] [oks_sigmas_str_j]")
 
     latex_jinja_env = jinja2.Environment(
         block_start_string    = '\BLOCK{',
@@ -46,7 +47,8 @@ def main():
         os.makedirs(saveDir)
     teamName    = sys.argv[4]
     versionName = sys.argv[5]
-    oks_sigmas_j = sys.argv[6] # i. 내가추가한부분.
+    oks_sigmas_str_j = sys.argv[6] # i. 내가추가한부분.
+    oks_sigmas_j = map(int, oks_sigmas_str_j.strip('[]').split(','))
 
     ## create dictionary with all images info
     gt_data   = json.load(open(annFile,'r'))
