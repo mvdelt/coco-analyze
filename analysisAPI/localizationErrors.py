@@ -145,6 +145,11 @@ def localizationErrors( coco_analyze, imgs_info, saveDir ):
 
     ####################################
     err_vecs = [jitt_keypoints,inv_keypoints,swap_keypoints,miss_keypoints]
+
+    # i. 포문으로 디버그용 출력.
+    for i in [good_keypoints,jitt_keypoints,inv_keypoints,swap_keypoints,miss_keypoints]:
+        print('j) (localizationErrors.py) {}:'.format(i))
+
     for j, err_type in enumerate(['Jitter', 'Inversion', 'Swap', 'Miss']):
         TOT_LABELS = []
         ERRORS = []
@@ -162,7 +167,7 @@ def localizationErrors( coco_analyze, imgs_info, saveDir ):
         rect = -.03,0,0.45,0.9
         ax1 = fig.add_axes(rect)
         colors = [c.rgb for c in list(Color("white").range_to(Color(COLORS[j]),len(KEYPOINTS_L)))]
-        print('j) ERRORS:{}, its type:{}'.format(ERRORS, type(ERRORS)))
+        print('j) (localizationErrors.py) ERRORS:{}, its type:{}'.format(ERRORS, type(ERRORS)))
         patches, autotexts = ax1.pie( ERRORS, colors=colors)
         lgd=fig.legend(patches, TOT_LABELS, bbox_to_anchor=(.45, .9),
             loc="upper left",ncol=2,fancybox=True, shadow=True,fontsize=20)
