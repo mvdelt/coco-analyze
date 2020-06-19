@@ -74,10 +74,23 @@ def backgroundFalsePosErrors( coco_analyze, imgs_info, saveDir ):
 
     high_score_fp = [d for d in sorted_fps if p_80 <= d['score']]
 
-    max_height = max([d['bbox'][3] for d in high_score_fp])
-    min_height = min([d['bbox'][3] for d in high_score_fp])
-    max_width = max([d['bbox'][2] for d in high_score_fp])
-    min_width = min([d['bbox'][2] for d in high_score_fp])
+    # i. 내가 try except 구문으로 다 바꿔줌. 여기서 에러떠서. - ValueError: max() arg is an empty sequence
+    try:
+        max_height = max([d['bbox'][3] for d in high_score_fp])
+    except ValueError:
+        max_height = 0
+    try:        
+        min_height = min([d['bbox'][3] for d in high_score_fp])
+    except ValueError:
+        min_height = 0
+    try:
+        max_width = max([d['bbox'][2] for d in high_score_fp])
+    except ValueError:
+        max_width = 0
+    try:
+        min_width = min([d['bbox'][2] for d in high_score_fp])
+    except ValueError:
+        min_width = 0
 
     f.write("\nBackground False Positives Bounding Box Dimenstions:\n")
     f.write(" - Min width:  [%d]\n"%min_width)
