@@ -9,6 +9,8 @@ from scipy.optimize import linear_sum_assignment
 from . import mask as maskUtils
 import copy
 
+import sys # i. 내가임포트함.
+
 class COCOeval:
     # Interface for evaluating detection on the Microsoft COCO dataset.
     #
@@ -201,6 +203,7 @@ class COCOeval:
         return ious
 
     def computeOks(self, imgId, catId):
+        print('j) this is {} method...(using sys.getframe()~~)'.format(sys._getframe().f_code.co_name))
         p = self.params
         # dimention here should be Nxm
         gts = self._gts[imgId, catId]
@@ -220,15 +223,19 @@ class COCOeval:
         k = len(sigmas)
 
         # compute oks between each detection and ground truth object
+        print('j) list(enumerate(gts)):',list(enumerate(gts)))
+        print('j) list(enumerate(dts)):',list(enumerate(dts)))
         for j, gt in enumerate(gts):
+            print('j) j:{}, gt:{}'.format(j, gt))
             # create bounds for ignore regions(double the gt bbox)
             g = np.array(gt['keypoints'])
             xg = g[0::3]; yg = g[1::3]; vg = g[2::3]
             k1 = np.count_nonzero(vg > 0)
             bb = gt['bbox']
             x0 = bb[0] - bb[2]; x1 = bb[0] + bb[2] * 2
-            y0 = bb[1] - bb[3]; y1 = bb[1] + bb[3] * 2
+            y0 = bb[1] - bb[3]; y1 = bb[1] + bb[3] * 2            
             for i, dt in enumerate(dts):
+                print('j) i:{}, dt:{}'.format(i, dt))
                 d = np.array(dt['keypoints'])
                 xd = d[0::3]; yd = d[1::3]
                 if k1>0:
