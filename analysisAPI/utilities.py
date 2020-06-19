@@ -12,17 +12,20 @@ import skimage.io as io
 """
 Utility functions
 """
-num_kpts  = 17
+num_kpts  = 6 # i. 내 6개키포인트에 맞춰 수정.
 oks       = [0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95]
 sqrt_neg_log_oks = np.sqrt(-2*np.log(oks))
-sigmas    = np.array([.26, .25, .25, .35, .35, .79, .79, .72, .72, .62,.62, 1.07, 1.07, .87, .87, .89, .89])/10.0
+# sigmas    = np.array([.26, .25, .25, .35, .35, .79, .79, .72, .72, .62,.62, 1.07, 1.07, .87, .87, .89, .89])/10.0
+sigmas    = np.array([0.025, 0.025, 0.025, 0.025, 0.025, 0.025]) # i. 내 6개키포인트에 맞춰 수정.
 variances = (sigmas * 2)**2
-skeleton  = [[16, 14], [14, 12], [17, 15], [15, 13], [12, 13], [6, 12], [7, 13], [6, 7], [6, 8], [7, 9],
-            [8, 10], [9, 11], [2, 3], [1, 2], [1, 3], [2, 4], [3, 5], [4, 6], [5, 7]]
-colors    = {(0,1): '#cd87ff', (0,2): '#cd87ff', (1,2): '#cd87ff', (1,3): '#cd87ff', (2,4): '#cd87ff',
-            (3,5): '#74c8f9', (4,6): '#74c8f9', (5,6): '#feff95', (5,7): '#74c8f9', (5,11): '#feff95',
-            (6,8): '#74c8f9', (6,12): '#feff95',(7,9): '#74c8f9', (8,10): '#74c8f9',(11,12): '#feff95',
-            (13,11): '#a2805b',(14,12): '#a2805b',(15,13): '#a2805b',(16,14): '#a2805b'}
+# skeleton  = [[16, 14], [14, 12], [17, 15], [15, 13], [12, 13], [6, 12], [7, 13], [6, 7], [6, 8], [7, 9],
+#             [8, 10], [9, 11], [2, 3], [1, 2], [1, 3], [2, 4], [3, 5], [4, 6], [5, 7]]
+skeleton  = [[1,3],[2,4],[1,5],[2,6]] # i. 내 6개키포인트에 맞춰 수정.
+# colors    = {(0,1): '#cd87ff', (0,2): '#cd87ff', (1,2): '#cd87ff', (1,3): '#cd87ff', (2,4): '#cd87ff',
+#             (3,5): '#74c8f9', (4,6): '#74c8f9', (5,6): '#feff95', (5,7): '#74c8f9', (5,11): '#feff95',
+#             (6,8): '#74c8f9', (6,12): '#feff95',(7,9): '#74c8f9', (8,10): '#74c8f9',(11,12): '#feff95',
+#             (13,11): '#a2805b',(14,12): '#a2805b',(15,13): '#a2805b',(16,14): '#a2805b'}
+colors    = {(0,2): '#cd87ff', (1,3): '#cd87ff', (0,4): '#cd87ff', (1,5): '#74c8f9'} # i. 내 6개키포인트에 맞춰 수정.
 
 def show_dets(coco_dts, coco_gts, img_info, save_path=None):
     if len(coco_dts) == 0 and len(coco_gts)==0:
@@ -73,16 +76,23 @@ def show_dets(coco_dts, coco_gts, img_info, save_path=None):
         for sk in sks:
             plt.plot(x[sk],y[sk], linewidth=3, color=colors[sk[0],sk[1]])
 
-        for kk in range(17):
-            if kk in [1,3,5,7,9,11,13,15]:
+        for kk in range(num_kpts): # i. 17로 돼있었는데 변수이용하도록 수정.
+            # if kk in [1,3,5,7,9,11,13,15]:
+            #     plt.plot(x[kk], y[kk],'o',markersize=5, markerfacecolor='r',
+            #                                   markeredgecolor='r', markeredgewidth=3)
+            # elif kk in [2,4,6,8,10,12,14,16]:
+            #     plt.plot(x[kk], y[kk],'o',markersize=5, markerfacecolor='g',
+            #                                   markeredgecolor='g', markeredgewidth=3)
+            # else:
+            #     plt.plot(x[kk], y[kk],'o',markersize=5, markerfacecolor='b',
+            #                                   markeredgecolor='b', markeredgewidth=3)
+            if kk in [1,3,5]:
                 plt.plot(x[kk], y[kk],'o',markersize=5, markerfacecolor='r',
                                               markeredgecolor='r', markeredgewidth=3)
-            elif kk in [2,4,6,8,10,12,14,16]:
+            elif kk in [0,2,4]:
                 plt.plot(x[kk], y[kk],'o',markersize=5, markerfacecolor='g',
                                               markeredgecolor='g', markeredgewidth=3)
-            else:
-                plt.plot(x[kk], y[kk],'o',markersize=5, markerfacecolor='b',
-                                              markeredgecolor='b', markeredgewidth=3)
+
 
         bbox  = ann['bbox']; score = ann['score']
         rect = plt.Rectangle((bbox[0],bbox[1]),bbox[2],bbox[3],fill=False,edgecolor=[1, .6, 0],linewidth=3)

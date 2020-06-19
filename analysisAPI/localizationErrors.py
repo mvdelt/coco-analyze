@@ -17,6 +17,12 @@ def localizationErrors( coco_analyze, imgs_info, saveDir ):
     tic = time.time()
     paths = {}
 
+
+    # i. 내가추가.
+    num_keypointsj = coco_analyze.cocoEval.params.kpt_oks_sigmas.size
+    print('j) (analysisAPI.localizationErrors.py localizationErrors(...)) num_keypointsj:{}, its type:{}'.format(num_keypiontsj, type(num_keypointsj))
+
+
     # set parameters for keypoint localization analysis
     coco_analyze.params.areaRng    = [[32 ** 2, 1e5 ** 2]]
     coco_analyze.params.areaRngLbl = ['all']
@@ -31,9 +37,11 @@ def localizationErrors( coco_analyze, imgs_info, saveDir ):
     f.write("Number matches:    [%d]\n\n"%len(matched_dts))
 
     good = 0; jitter = 0; inversion = 0; swap = 0; miss = 0; tot = 0.
-    good_keypoints = np.zeros(17)
-    jitt_keypoints = np.zeros(17); inv_keypoints  = np.zeros(17)
-    swap_keypoints = np.zeros(17); miss_keypoints = np.zeros(17)
+    good_keypoints = np.zeros(num_keypointsj)
+    jitt_keypoints = np.zeros(num_keypointsj)
+    inv_keypoints  = np.zeros(num_keypointsj)
+    swap_keypoints = np.zeros(num_keypointsj)
+    miss_keypoints = np.zeros(num_keypointsj)
 
     for dtm in matched_dts:
         match = dt_gt_matches[dtm['id']][0]
@@ -84,20 +92,23 @@ def localizationErrors( coco_analyze, imgs_info, saveDir ):
     I = io.imread('./latex/manikin.jpg')
     plt.imshow(I); ax = plt.gca(); ax.set_autoscale_on(False)
 
+
+    # i. 와씨 또있네;;; 아예일반화안해놨네;;; 뭔 코드를 이렇게만들어놓냐.... 어휴;; COCO키포인트에만 써먹을건가...;; 내플젝에맞게 6개키포인트에맞게 수정함.
     rects_d = {}
-    rects_d['nose']          = .47,.75,.07,.07
-    rects_d['left_eye']      = .5, .83,.07,.07; rects_d['right_eye']      = .44,.83,.07,.07
-    rects_d['left_ear']      = .54,.77,.07,.07; rects_d['right_ear']      = .4, .77,.07,.07
+    # rects_d['nose']          = .47,.75,.07,.07
+    # rects_d['left_eye']      = .5, .83,.07,.07; rects_d['right_eye']      = .44,.83,.07,.07
+    # rects_d['left_ear']      = .54,.77,.07,.07; rects_d['right_ear']      = .4, .77,.07,.07
     rects_d['left_shoulder'] = .58,.68,.1, .1;  rects_d['right_shoulder'] = .32,.65,.1, .1
-    rects_d['left_elbow']    = .67,.6, .1, .1;  rects_d['right_elbow']    = .27,.52,.1, .1
-    rects_d['left_wrist']    = .59,.49,.1, .1;  rects_d['right_wrist']    = .34,.42,.1, .1
+    # rects_d['left_elbow']    = .67,.6, .1, .1;  rects_d['right_elbow']    = .27,.52,.1, .1
+    # rects_d['left_wrist']    = .59,.49,.1, .1;  rects_d['right_wrist']    = .34,.42,.1, .1
     rects_d['left_hip']      = .48,.5, .1, .1;  rects_d['right_hip']      = .39,.5, .1, .1
     rects_d['left_knee']     = .55,.32,.1, .1;  rects_d['right_knee']     = .4, .32,.1, .1
-    rects_d['left_ankle']    = .55,.15,.1, .1;  rects_d['right_ankle']    = .4, .15,.1, .1
-    order = ['nose','left_eye','right_eye','left_ear','right_ear',
-             'left_shoulder','right_shoulder','left_elbow','right_elbow',
-             'left_wrist','right_wrist','left_hip','right_hip',
-             'left_knee','right_knee','left_ankle','right_ankle']
+    # rects_d['left_ankle']    = .55,.15,.1, .1;  rects_d['right_ankle']    = .4, .15,.1, .1
+    # order = ['nose','left_eye','right_eye','left_ear','right_ear',
+    #          'left_shoulder','right_shoulder','left_elbow','right_elbow',
+    #          'left_wrist','right_wrist','left_hip','right_hip',
+    #          'left_knee','right_knee','left_ankle','right_ankle']
+    order = ['left_shoulder','right_shoulder','left_hip','right_hip','left_knee','right_knee']
     COLORS = ['#8C4646','#D96459','#F2AE72','#F2E394']
 
     f.write("Per Keypoint breakdown: [jitter, inversion, swap, miss]\n")
@@ -123,8 +134,9 @@ def localizationErrors( coco_analyze, imgs_info, saveDir ):
     f.write(" - Swap:      %s\n"%swap_keypoints)
     f.write(" - Miss:      %s\n"%miss_keypoints)
 
-    KEYPOINTS_L = ['Nose','Eyes','Ears','Should.','Elbows','Wrists','Hips','Knees','Ankles']
-    KEYPOINTS_I = [[0],[1,2],[3,4],[5,6],[7,8],[9,10],[11,12],[13,14],[15,16]]
+    # KEYPOINTS_L = ['Nose','Eyes','Ears','Should.','Elbows','Wrists','Hips','Knees','Ankles']
+    KEYPOINTS_L = ['Nosejjjj','Eyesjjjj','Earsjjjj','Shouldjjjj.','Elbowsjjjj','Wristsjjjj']
+    KEYPOINTS_I = [[0,1],[2,3],[4,5]]
 
     ####################################
     err_vecs = [jitt_keypoints,inv_keypoints,swap_keypoints,miss_keypoints]
@@ -193,7 +205,7 @@ def localizationErrors( coco_analyze, imgs_info, saveDir ):
                 c_0 = len([iii for iii in v if iii==0])
                 c_1 = len([iii for iii in v if iii==1])
                 c_2 = len([iii for iii in v if iii==2])
-                assert c_0 + c_1 + c_2 == 17, err_str
+                assert c_0 + c_1 + c_2 == num_keypointsj, err_str
 
             for sk in sks:
                 if USE_VISIBILITY_FOR_PLOTS and v[sk[0]] * v[sk[1]] == 0:
@@ -203,7 +215,7 @@ def localizationErrors( coco_analyze, imgs_info, saveDir ):
                 else:
                     plt.plot(x[sk],y[sk], linewidth=3, color=utilities.colors[sk[0],sk[1]])
 
-            for kk in range(17):
+            for kk in range(num_keypointsj):
                 if kk in [1,3,5,7,9,11,13,15]:
                     if USE_VISIBILITY_FOR_PLOTS and v[kk] == 0:
                         # don't plot the keypoints if it has Visibilty flag == 0
