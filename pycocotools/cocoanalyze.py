@@ -26,7 +26,7 @@ class COCOanalyze:
         '''
 
         # i. 넘파이 연산 에러 디버그하기위해 여기에 이거 넣어줘봄. 이러면 에러난 위치가 좀 보이려나?
-        np.seterr(all='raise')
+        # np.seterr(all='raise')
         import sys # i. 내가임포트함.
 
         # ground truth COCO API
