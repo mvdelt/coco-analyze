@@ -19,9 +19,12 @@ import numpy as np # i. 내가임포트함.
 
 def main():
 
-    # i. 넘파이 연산 에러 디버그하기위해 여기에 numpy.seterr(...) 넣어줘봄.
+    # i. 넘파이 연산 에러 디버그하기위해 여기에 numpy.seterr(...) 넣어줘봄. ->잘 작동하는듯.
+    # np.seterr(all='raise')
     # np.seterr(all='warn', divide='raise')
-    np.seterr(all='raise')
+    # i. all, divide, over, under, invalid 각각에 대해 {‘ignore’, ‘warn’, ‘raise’, ‘call’, ‘print’, ‘log’} 의 옵션이 있음.
+    np_seterr_setting_j = {'divide': 'raise', 'over': 'warn', 'under': 'warn', 'invalid': 'raise'} 
+    np.seterr(**np_seterr_setting_j)
 
     print('j) sys.argv:',sys.argv)
     print('j) len(sys.argv):',len(sys.argv))    
