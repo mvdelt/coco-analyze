@@ -48,7 +48,8 @@ def main():
     teamName    = sys.argv[4]
     versionName = sys.argv[5]
     oks_sigmas_str_j = sys.argv[6] # i. 내가추가한부분.
-    oks_sigmas_j = list(map(int, oks_sigmas_str_j.strip('[]').split(',')))
+    oks_sigmas_j = list(map(float, oks_sigmas_str_j.strip('[]').split(',')))
+    print('j) (run_analysis.py main()) oks_sigmas_j:{}, its type:{}'.format(oks_sigmas_j, type(oks_sigmas_j)))
 
     ## create dictionary with all images info
     gt_data   = json.load(open(annFile,'r'))
