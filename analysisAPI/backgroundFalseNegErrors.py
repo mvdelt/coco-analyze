@@ -52,10 +52,29 @@ def backgroundFalseNegErrors( coco_analyze, imgs_info, saveDir ):
         f.write("Image_id, ground_truth id, num_keypoints: [%d][%d][%d]\n"%(t['image_id'],t['id'],t['num_keypoints']))
         utilities.show_dets([],[t],imgs_info[t['image_id']],paths[name])
 
-    max_height = max([d['bbox'][3] for d in fn_gts])
-    min_height = min([d['bbox'][3] for d in fn_gts])
-    max_width = max([d['bbox'][2] for d in fn_gts])
-    min_width = min([d['bbox'][2] for d in fn_gts])
+    # max_height = max([d['bbox'][3] for d in fn_gts])
+    # min_height = min([d['bbox'][3] for d in fn_gts])
+    # max_width = max([d['bbox'][2] for d in fn_gts])
+    # min_width = min([d['bbox'][2] for d in fn_gts])
+
+    # i. 내가 try except 구문으로 다 바꿔줌. 여기서 에러떠서. - ValueError: max() arg is an empty sequence
+    try:
+        max_height = max([d['bbox'][3] for d in fn_gts])
+    except ValueError:
+        max_height = 0
+    try:        
+        min_height = min([d['bbox'][3] for d in fn_gts])
+    except ValueError:
+        min_height = 0
+    try:
+        max_width = max([d['bbox'][2] for d in fn_gts])
+    except ValueError:
+        max_width = 0
+    try:
+        min_width = min([d['bbox'][2] for d in fn_gts])
+    except ValueError:
+        min_width = 0
+
 
     f.write("\nBackground False Negatives Bounding Box Dimenstions:\n")
     f.write(" - Min width:  [%d]\n"%min_width)
