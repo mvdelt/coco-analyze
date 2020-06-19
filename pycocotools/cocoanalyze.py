@@ -880,7 +880,7 @@ class COCOanalyze:
     @staticmethod
     def _plot(recalls, ps_mat, params, err_labels=[], color_vec=[], savedir=None, team_name=None):
         print('j) this is {} method...(using sys.getframe()~~)'.format(sys._getframe().f_code.co_name))
-        iouThrs    = params.oksThrs[::-1]
+        iouThrs    = params.oksThrs[::-1] # i. -1넣엇으니 순서 거꾸로한거. 즉, OKS 쓰레숄드 높은값부터 낮은값 순서로 바꾼거지(0.95,...,0.5 순서로).
         areaRngLbl = params.areaRngLbl
         maxDets    = params.maxDets
         catId      = 0
@@ -894,7 +894,9 @@ class COCOanalyze:
             labels = ['Oks %.2f'%o for o in iouThrs]
             colors = list(Color("white").range_to(Color("seagreen"),len(labels)))
 
+        print('j) list(enumerate(areaRngLbl)):',list(enumerate(areaRngLbl)))
         for aind, a in enumerate(areaRngLbl):
+            print('j) list(enumerate(maxDets)):',list(enumerate(maxDets)))
             for mind, m in enumerate(maxDets):
                 if not err_labels:
                     fig=plt.figure(figsize=(10,8))
@@ -902,6 +904,7 @@ class COCOanalyze:
                     plt.title('areaRng:[{}], maxDets:[{}]'.format(a,m),fontsize=18)
                     oks_ps_mat = ps_mat
 
+                print('j) list(enumerate(iouThrs)):',list(enumerate(iouThrs)))
                 for tind, t in enumerate(iouThrs):
                     legend_patches = []
                     if err_labels:
@@ -911,8 +914,9 @@ class COCOanalyze:
                         thresh_idx = [tind + i * len(iouThrs) for i in range(len(labels))]
                         oks_ps_mat = ps_mat[thresh_idx,:,:,:,:]
 
+                    print('j) list(enumerate(labels)):',list(enumerate(labels)))
                     for lind, l in enumerate(labels):
-                        precisions = oks_ps_mat[lind,:,catId,aind,mind]
+                        precisions = oks_ps_mat[lind,:,catId,aind,mind] # i. T,R,K,A,M 일거임(이게뭔진조사완료함. iou쓰레숄드,리콜쓰레숄드,카테고리,에어리어,최대디텍션수 임.). 
                         plt.plot(recalls,precisions,c='k',ls='-',lw=2)
 
                         if lind > 0:
