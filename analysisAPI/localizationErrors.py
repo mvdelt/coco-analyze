@@ -18,13 +18,16 @@ def localizationErrors( coco_analyze, imgs_info, saveDir ):
     paths = {}
 
 
-    # i. 내가추가.
+    # i. 내가추가. 키포인트갯수 변수에할당하고, 걍 잘 작동하나 보려고 이것저것 출력해봄.
     num_keypointsj = coco_analyze.cocoEval.params.kpt_oks_sigmas.size
-    print('j) (analysisAPI.localizationErrors.py localizationErrors(...)) num_keypointsj:{}, its type:{}'.format(num_keypiontsj, type(num_keypointsj))
+    print('j) (analysisAPI.localizationErrors.py localizationErrors(...)) coco_analyze.cocoEval.params.kpt_oks_sigmas.size:',coco_analyze.cocoEval.params.kpt_oks_sigmas.size)
+    num_keypointsj = coco_analyze.params.sigmas.size
+    print('j) (analysisAPI.localizationErrors.py localizationErrors(...)) coco_analyze.params.sigmas.size:',coco_analyze.params.sigmas.size)
+    print('j) (analysisAPI.localizationErrors.py localizationErrors(...)) num_keypointsj:{}, its type:{}'.format(num_keypointsj, type(num_keypointsj)))
 
 
     # set parameters for keypoint localization analysis
-    coco_analyze.params.areaRng    = [[32 ** 2, 1e5 ** 2]]
+    coco_analyze.params.areaRng = [[32 ** 2, 1e5 ** 2]]
     coco_analyze.params.areaRngLbl = ['all']
     coco_analyze.cocoEval.params.useGtIgnore = 0
     coco_analyze.cocoEval.params.gtIgnoreIds = []
