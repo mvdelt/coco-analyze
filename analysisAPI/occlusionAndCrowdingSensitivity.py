@@ -120,7 +120,7 @@ def occlusionAndCrowdingSensitivity( coco_analyze, oks, saveDir ):
     plt.savefig(path,bbox_inches='tight')
     plt.close()
 
-    total_keypoints = np.zeros((3,4));
+    total_keypoints = np.zeros((3,4))
     err_mat = {}
     err_types = ['good', 'miss', 'jitter', 'swap', 'inversion']
     for e in err_types: err_mat[e] = np.zeros((3,4))

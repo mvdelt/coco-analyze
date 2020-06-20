@@ -203,7 +203,7 @@ class COCOeval:
         return ious
 
     def computeOks(self, imgId, catId):
-        print('j) this is {} method...(using sys.getframe()~~)'.format(sys._getframe().f_code.co_name))
+        # print('j) this is {} method...(using sys.getframe()~~)'.format(sys._getframe().f_code.co_name))
         p = self.params
         # dimention here should be Nxm
         gts = self._gts[imgId, catId]
@@ -223,8 +223,8 @@ class COCOeval:
         k = len(sigmas)
 
         # compute oks between each detection and ground truth object
-        print('j) list(enumerate(gts)):',list(enumerate(gts)))
-        print('j) list(enumerate(dts)):',list(enumerate(dts)))
+        # print('j) list(enumerate(gts)):',list(enumerate(gts)))
+        # print('j) list(enumerate(dts)):',list(enumerate(dts)))
         for j, gt in enumerate(gts):
             print('j) j:{}, gt:{}'.format(j, gt))
             # create bounds for ignore regions(double the gt bbox)
@@ -251,7 +251,7 @@ class COCOeval:
                 if k1 > 0:
                     e=e[vg > 0]
                 ious[i, j] = np.sum(np.exp(-e)) / e.shape[0]
-                print('j) np.sum(np.exp(-e)) / e.shape[0] 에서, 분자:{}, 분모:{}'.format(np.sum(np.exp(-e)), e.shape[0]))
+                # print('j) np.sum(np.exp(-e)) / e.shape[0] 에서, 분자:{}, 분모:{}'.format(np.sum(np.exp(-e)), e.shape[0]))
                 print('j) ious[{},{}]:{}'.format(i, j, ious[i, j]))
         return ious
 

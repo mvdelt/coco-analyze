@@ -147,9 +147,9 @@ def localizationErrors( coco_analyze, imgs_info, saveDir ):
     err_vecs = [jitt_keypoints,inv_keypoints,swap_keypoints,miss_keypoints]
 
     # i. 포문으로 디버그용 출력.
-    print('j) (localizationErrors.py) good_keypoints, jitt_keypoints, inv_keypoints, swap_keypoints, miss_keypoints 은 각각 아래와 같음:')
+    # print('j) (localizationErrors.py) good_keypoints, jitt_keypoints, inv_keypoints, swap_keypoints, miss_keypoints 은 각각 아래와 같음:')
     for i in [good_keypoints, jitt_keypoints, inv_keypoints, swap_keypoints, miss_keypoints]:
-        print('j) {}'.format(i))
+        # print('j) {}'.format(i))
 
     for j, err_type in enumerate(['Jitter', 'Inversion', 'Swap', 'Miss']):
         TOT_LABELS = []
@@ -159,9 +159,9 @@ def localizationErrors( coco_analyze, imgs_info, saveDir ):
             for l in i:
                 tot_errs += err_vecs[j][l]
             # ERRORS.append(tot_errs/float(sum(err_vecs[j])))
-            print('j) <err_type:{},{}/3pairs>'.format(err_type, i))
-            print('j) tot_errs:{}, float(sum(err_vecs[j])):{}'.format(tot_errs ,float(sum(err_vecs[j]))))
-            print('j) tot_errs/float(sum(err_vecs[j])+0.00001):',tot_errs/float(sum(err_vecs[j])+0.00001))
+            # print('j) <err_type:{},{}/3pairs>'.format(err_type, i))
+            # print('j) tot_errs:{}, float(sum(err_vecs[j])):{}'.format(tot_errs ,float(sum(err_vecs[j]))))
+            # print('j) tot_errs/float(sum(err_vecs[j])+0.00001):',tot_errs/float(sum(err_vecs[j])+0.00001))
             ERRORS.append(tot_errs/float(sum(err_vecs[j])+0.00001)) # i. 0으로 나눠지는 문제가 발생하는것같아서 아주작은수 내가 더해줌. ->에러해결!
 
         for lind, l in enumerate(KEYPOINTS_L):
@@ -172,7 +172,7 @@ def localizationErrors( coco_analyze, imgs_info, saveDir ):
         rect = -.03,0,0.45,0.9
         ax1 = fig.add_axes(rect)
         colors = [c.rgb for c in list(Color("white").range_to(Color(COLORS[j]),len(KEYPOINTS_L)))]
-        print('j) (localizationErrors.py) ERRORS:{}, its type:{}'.format(ERRORS, type(ERRORS)))
+        # print('j) (localizationErrors.py) ERRORS:{}, its type:{}'.format(ERRORS, type(ERRORS)))
         patches, autotexts = ax1.pie( ERRORS, colors=colors)
         lgd=fig.legend(patches, TOT_LABELS, bbox_to_anchor=(.45, .9),
             loc="upper left",ncol=2,fancybox=True, shadow=True,fontsize=20)
