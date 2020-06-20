@@ -42,8 +42,14 @@ def sizeSensitivity( coco_analyze, oks, saveDir ):
             size_index.setdefault('xxlarge', []).append(a['id'])
 
     f.write("Benchmark Dimensions:\n")
+    print('j) size_index:{}, ')
     for i,a in enumerate(areaRngs[:-1]):
-        f.write("%d) %s-%s: %d\n"%(i,areaRngLbls[i],a,len(size_index[areaRngLbls[i]])))
+        try:
+            f.write("%d) %s-%s: %d\n"%(i,areaRngLbls[i],a,len(size_index[areaRngLbls[i]])))
+        except KeyError:
+            size_index[areaRngLbls[i]]=[] # i. 일케해주거나, 아니면 걍 지금 요 try except 대신 저위에 size_index 처음 만들어줄때 텅빈딕셔너리로하지말고 'medium','large','xlarge','xxlarge'모든키에대해 텅빈리스트를 할당해줘도 될듯.
+            f.write("%d) %s-%s: %d\n"%(i,areaRngLbls[i],a,len(size_index[areaRngLbls[i]])))
+
 
     fig, ax = plt.subplots(figsize=(6,6))
     ax.set_facecolor('lightgray')
