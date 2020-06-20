@@ -190,7 +190,7 @@ def occlusionAndCrowdingSensitivity( coco_analyze, oks, saveDir ):
         fig = plt.figure(figsize=(6,6))
         ax = fig.add_subplot(111)
         ax.set_aspect(1)
-        print('j) eind:{}, e:{}, err_mat[e]:{}, total_keypoints:{}'.format(eind, e, err_mat[e], total_keypoints))
+        print('j) eind:{}, e:{}, err_mat[e]:{}, total_keypoints:{}, err_mat[e]/total_keypoints:{}'.format(eind, e, err_mat[e], total_keypoints, err_mat[e]/total_keypoints))        
         res = ax.imshow(err_mat[e]/total_keypoints, cmap=cmaps[eind], interpolation='nearest')
 
         width, height = err_mat[e].shape
