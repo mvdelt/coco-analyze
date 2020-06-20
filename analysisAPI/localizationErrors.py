@@ -147,9 +147,9 @@ def localizationErrors( coco_analyze, imgs_info, saveDir ):
     err_vecs = [jitt_keypoints,inv_keypoints,swap_keypoints,miss_keypoints]
 
     # i. 포문으로 디버그용 출력.
-    # print('j) (localizationErrors.py) good_keypoints, jitt_keypoints, inv_keypoints, swap_keypoints, miss_keypoints 은 각각 아래와 같음:')
+    print('j) (localizationErrors.py) good_keypoints, jitt_keypoints, inv_keypoints, swap_keypoints, miss_keypoints 은 각각 아래와 같음:')
     for i in [good_keypoints, jitt_keypoints, inv_keypoints, swap_keypoints, miss_keypoints]:
-        # print('j) {}'.format(i))
+        print('j) {}'.format(i))
 
     for j, err_type in enumerate(['Jitter', 'Inversion', 'Swap', 'Miss']):
         TOT_LABELS = []
