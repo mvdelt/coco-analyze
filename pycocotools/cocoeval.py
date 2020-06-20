@@ -226,7 +226,7 @@ class COCOeval:
         # print('j) list(enumerate(gts)):',list(enumerate(gts)))
         # print('j) list(enumerate(dts)):',list(enumerate(dts)))
         for j, gt in enumerate(gts):
-            print('j) j:{}, gt:{}'.format(j, gt))
+            # print('j) j:{}, gt:{}'.format(j, gt))
             # create bounds for ignore regions(double the gt bbox)
             g = np.array(gt['keypoints'])
             xg = g[0::3]; yg = g[1::3]; vg = g[2::3]
@@ -235,7 +235,7 @@ class COCOeval:
             x0 = bb[0] - bb[2]; x1 = bb[0] + bb[2] * 2
             y0 = bb[1] - bb[3]; y1 = bb[1] + bb[3] * 2            
             for i, dt in enumerate(dts):
-                print('j) i:{}, dt:{}'.format(i, dt))
+                # print('j) i:{}, dt:{}'.format(i, dt))
                 d = np.array(dt['keypoints'])
                 xd = d[0::3]; yd = d[1::3]
                 if k1>0:

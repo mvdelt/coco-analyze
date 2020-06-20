@@ -894,19 +894,19 @@ class COCOanalyze:
             labels = ['Oks %.2f'%o for o in iouThrs]
             colors = list(Color("white").range_to(Color("seagreen"),len(labels)))
 
-        print('j) list(enumerate(areaRngLbl)):',list(enumerate(areaRngLbl)))
+        # print('j) list(enumerate(areaRngLbl)):',list(enumerate(areaRngLbl)))
         for aind, a in enumerate(areaRngLbl):
-            print('j) in areaRngLbl, aind:{}, a:{}'.format(aind, a))
-            print('j) list(enumerate(maxDets)):',list(enumerate(maxDets)))
+            # print('j) in areaRngLbl, aind:{}, a:{}'.format(aind, a))
+            # print('j) list(enumerate(maxDets)):',list(enumerate(maxDets)))
             for mind, m in enumerate(maxDets):
-                print('j) in maxDets, mind:{}, m:{}'.format(mind, m))
+                # print('j) in maxDets, mind:{}, m:{}'.format(mind, m))
                 if not err_labels:
                     fig=plt.figure(figsize=(10,8))
                     ax = fig.add_axes([0.1, 0.15, 0.56, 0.7])
                     plt.title('areaRng:[{}], maxDets:[{}]'.format(a,m),fontsize=18)
                     oks_ps_mat = ps_mat
 
-                print('j) list(enumerate(iouThrs)):',list(enumerate(iouThrs)))
+                # print('j) list(enumerate(iouThrs)):',list(enumerate(iouThrs)))
                 for tind, t in enumerate(iouThrs):
                     print('j) in iouThrs, tind:{}, t:{}'.format(tind, t))
                     legend_patches = []
@@ -917,9 +917,9 @@ class COCOanalyze:
                         thresh_idx = [tind + i * len(iouThrs) for i in range(len(labels))]
                         oks_ps_mat = ps_mat[thresh_idx,:,:,:,:]
 
-                    print('j) list(enumerate(labels)):',list(enumerate(labels)))
+                    # print('j) list(enumerate(labels)):',list(enumerate(labels)))
                     for lind, l in enumerate(labels):
-                        print('j) in labels, lind:{}, l:{}'.format(lind, l))
+                        # print('j) in labels, lind:{}, l:{}'.format(lind, l))
                         precisions = oks_ps_mat[lind,:,catId,aind,mind] # i. T,R,K,A,M 일거임(이게뭔진조사완료함. iou쓰레숄드,리콜쓰레숄드,카테고리,에어리어,최대디텍션수 임.). 
                         plt.plot(recalls,precisions,c='k',ls='-',lw=2)
 
@@ -929,10 +929,10 @@ class COCOanalyze:
                                          prev_precisions, precisions,
                                          where=precisions >= prev_precisions,
                                          facecolor=colors[lind].rgb, interpolate=True)
-                        print('j) precisions.shape:',precisions.shape)
-                        print('j) precisions:',precisions)
-                        print('j) precisions[precisions>-1].shape:',precisions[precisions>-1].shape)
-                        print('j) precisions[precisions>-1]:',precisions[precisions>-1])
+                        # print('j) precisions.shape:',precisions.shape)
+                        # print('j) precisions:',precisions)
+                        # print('j) precisions[precisions>-1].shape:',precisions[precisions>-1].shape)
+                        # print('j) precisions[precisions>-1]:',precisions[precisions>-1])
                         # m_map = np.mean(precisions[precisions>-1]) # i. 이렇게하면 len(precisions[precisions>-1])==0 일 경우(텅빈리스트일경우)에 np.mean 계산에서 에러가 남.
                         if len(precisions[precisions>-1])==0: # i. 요건 원래 있던 코드임. 이렇게해놓고 else에 안넣다니;;
                             m_map=.0
