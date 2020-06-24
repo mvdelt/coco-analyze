@@ -634,7 +634,11 @@ class Params:
         self.useCats = 1
         # i. 일단 디폴트로는 COCO 의 사람 키포인트 OKS simgas 값으로 해놓긴 했지만, COCOanalyze클래스의 init에서 사용자가입력해준 OKS sigmas 값으로 새로 넣어주도록 해놨음 내가. ->걍혹시몰라서 디폴트값도 내6개키포인트기준으로 바꿧음(임시값).
         # self.kpt_oks_sigmas = np.array([.26, .25, .25, .35, .35, .79, .79, .72, .72, .62,.62, 1.07, 1.07, .87, .87, .89, .89])/10.0
-        self.kpt_oks_sigmas = np.array([0.025, 0.025, 0.025, 0.025, 0.025, 0.025])
+        # self.kpt_oks_sigmas = np.array([0.025, 0.025, 0.025, 0.025, 0.025, 0.025]) # i. ->임의로 이 값 사용했었으나, 아래처럼 내가 직접 계산한값으로 바꿔줌.
+        # i. 2020.06.24.) 36개 PA방사선사진 두번 어노테이션해서 OKS sigmas 계산해봄: [0.08953876 0.08166177 0.0193918  0.01967773 0.02095149 0.02738186]
+        self.kpt_oks_sigmas = np.array([0.08953876, 0.08166177, 0.0193918, 0.01967773, 0.02095149, 0.02738186])
+
+
         # use gt ignores flag to discard any gt_id from evaluation
         self.useGtIgnore = 0
         self.gtIgnoreIds = set()
