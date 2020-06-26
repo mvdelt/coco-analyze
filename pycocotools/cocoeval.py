@@ -252,7 +252,7 @@ class COCOeval:
                     e=e[vg > 0]
                 ious[i, j] = np.sum(np.exp(-e)) / e.shape[0]
                 # print('j) np.sum(np.exp(-e)) / e.shape[0] 에서, 분자:{}, 분모:{}'.format(np.sum(np.exp(-e)), e.shape[0]))
-                print('j) ious[{},{}]:{}'.format(i, j, ious[i, j]))
+                # print('j) ious[{},{}]:{}'.format(i, j, ious[i, j]))
         return ious
 
     def evaluateImg(self, imgId, catId, aRng, maxDet, check_scores):
