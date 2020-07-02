@@ -958,9 +958,9 @@ class COCOanalyze:
                                  bbox_to_anchor=(1, 1), loc='upper left',
                                  fancybox=True, shadow=True,fontsize=18 )
 
-                    if savedir == None:
-                        plt.show()
-                    else:
+                    # if savedir == None:  # i. 내가코멘트아웃. savedir 디렉토리에 저장하는옵션 켜져있어도 플롯 보여주도록함.
+                    plt.show()
+                    if savedir != None:
                         prefix   = 'error_prc' if err_labels else 'prc'
                         oks_str  = '[%s]'%(int(100*t)) if err_labels else ''
                         savepath = '{}/{}_[{}]{}[{}][{}].pdf'.format(savedir,prefix,team_name,oks_str,a,m)
